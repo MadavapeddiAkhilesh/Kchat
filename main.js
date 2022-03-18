@@ -1,8 +1,11 @@
 img = "";
+Status = "";
 
 function setup(){
     canvas = createCanvas(640 , 420);
     canvas.center();
+    objectDetector = ml5.objectDetector('cocossd',modelLoaded);
+    document.getElementById("status").innerHTML="status:Detecting Objects";
 }
 
 function preload(){
@@ -22,4 +25,17 @@ function draw(){
     noFill();
     stroke("#00fbff");
     rect(30,130,450,300);
+}
+
+function modelLoaded(){
+    console.log("Modal Loaded");
+    Status = true;
+    objectDetector.detect(img , gotResults);
+}
+
+function gotResults(){
+    if(error) {
+        console.log(error);
+    }
+    console.log(results);
 }
